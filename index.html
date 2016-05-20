@@ -348,7 +348,7 @@
             resume.addEventListener('click', function(event) {
                 d3.select("#canvas").remove();
                 drawGlobe(i);
-                pauseAndResume();
+                //pauseAndResume();
                 if (spin == false) {
                     queue()
                         .defer(d3.json, "world-50m.json")
