@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bare - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+
+    #canvas {
+        display: block;
+        padding: 0;
+        margin: 0 auto;
+
+        background-color:white;
+    }
+
+    @media(max-width:1200px) {
+        .container {
+            margin: 0 50px;
+        }
+        #canvas {
+            width: 100%;
+            height: auto;
+            background-color:white;
+        }
+    }
+    #headerText {
+        text-align: center;
+        font-size: 1.5vw;
+        position:absolute;
+        right:0;
+        top:75%;
+        bottom: 25%;
+        width:100%;
+/*        height:60%;*/
+    }
+    #newsvg {
+        position:absolute;
+        right:0;
+        top:0;
+        bottom: 0;
+        width:100%;
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Start Bootstrap</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 .col-xs-12 .col-md-8 .col-sm-8 text-center">
+                <h1>Methane Productions</h1>
+                <p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
+                <ul class="list-unstyled">
+                    <li>Bootstrap v3.3.6</li>
+                    <!-- <li>jQuery v1.11.1</li> -->
+                </ul>
+                <div id="earth">
+                <canvas width=960 height=960 id="canvas"></canvas>
+                    <p id="headerText" ></p>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <script>
+        var width = 960,
+            height = 960;
+
+        var projection = d3.geo.orthographic()
+            .translate([width / 2, height / 2])
+            .scale(width / 2 - 20)
+            .clipAngle(90)
+            .precision(0.6);
+
+        var canvas = d3.select("canvas");
+        var c = canvas.node().getContext("2d");
+
+        var path = d3.geo.path()
+            .projection(projection)
+            .context(c);
+
+        var title = d3.select("#headerText");
+
+        queue()
+            .defer(d3.json, "world-50m.json")
+            .defer(d3.json, "data.json")
+            .await(ready);
+
+        var i = -1,
+        j = -1,
+        k = -1,
+        l = -1;
+
+        function ready(error, world, names) {
+          if (error) throw error;
+
+          var globe = {type: "Sphere"},
+              land = topojson.feature(world, world.objects.land),
+              countries = topojson.feature(world, world.objects.countries).features,
+              countriesMilkPro = topojson.feature(world, world.objects.countries).features,
+              countriesMilkCon = topojson.feature(world, world.objects.countries).features,
+              countriesMethane = topojson.feature(world, world.objects.countries).features,
+              borders = topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }),
+              // i = -1,
+              // j = -1,
+              // k = -1,
+              // l = -1,
+              n = countries.length;
+
+          countries = countries.filter(function(d) {
+            return names.some(function(n) {
+              if (d.id == n.CountryID) return d.name = n.CountryName;
+            });
+          }).sort(function(a, b) {
+            return a.name.localeCompare(b.name);
+          });
+          
+           countriesMilkPro = countriesMilkPro.filter(function(d) {
+            return names.some(function(n) {
+              if (d.id == n.CountryID) return d.MPro = n.MPro;
+            });
+          });
+          
+             countriesMilkCon = countriesMilkCon.filter(function(d) {
+            return names.some(function(n) {
+              if (d.id == n.CountryID) return d.MCon = n.MCon;
+            });
+          });
+          
+             countriesMethane = countriesMethane.filter(function(d) {
+            return names.some(function(n) {
+              if (d.id == n.CountryID) return d.Methane = n.Methane;
+            });
+          });
+
+          (function transition() {
+            d3.transition()
+                .duration(1250)
+                .each("start", function() {
+                    title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro[j = (j + 1) % n].MPro + "<br/>" + "Milk consumption: "+countriesMilkCon[k = (k + 1) % n].MCon + "<br/>" + "Methane production: "+countriesMethane[l = (l + 1) % n].Methane);
+                    //document.getElementById('graph').innerHTML = "this is a graph !!! " + i; // we can use this to plot graphs
+                })
+                
+                .tween("rotate", function() {
+                  var p = d3.geo.centroid(countries[i]),
+                      r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+            
+                  return function(t) {
+                    projection.rotate(r(t));
+                    c.clearRect(0, 0, width, height);
+                    c.fillStyle = "#ccc", c.beginPath(), path(land), c.fill();
+                    c.fillStyle = "#f00", c.beginPath(), path(countries[i]), c.fill();
+                    c.strokeStyle = "#fff", c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
+                    c.strokeStyle = "#000", c.lineWidth = 2, c.beginPath(), path(globe), c.stroke();
+                  };
+                })
+
+              .transition()
+                .each("end", transition);
+          })();
+          
+        }
+
+        d3.select(self.frameElement).style("height", height + "px");
+
+        // beginning of pause and resume
+        var pause = document.getElementById('canvas');
+        var spin = true;
+        var svg1;
+
+        pause.addEventListener('click', function(event) {
+            if (spin) {
+                d3.selectAll("*") 
+                    .transition() 
+                    .duration( 0 );
+
+                spin = false;
+                // create a svg, this is where the bar graph goes
+                svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg");
+
+                // draw a rectangle on svg to cover the background globe
+                svg1.append("rect")
+                    .attr("x", 0)
+                    .attr("y", 0)
+                    .attr("width", 1400)
+                    .attr("height", 1600)
+                    .style("fill","black")
+                    .style("opacity","0.85");
+
+                svg1.append("rect")
+                    .attr("id", "resumeButton")
+                    .attr("x", 30)
+                    .attr("y", 30)
+                    .attr("width", 90)
+                    .attr("height", 50)
+                    .style("fill","white")
+                    .style("opacity","0.85");
+
+                svg1.append("text")
+                    .text("Resume")
+                    .attr("x",75)
+                    .attr("y",40)
+                    .style("font-size","15px")
+                    .style("text-anchor", "middle")
+                    .style("alignment-baseline","middle")
+                    .style("fill", "black");
+            };
+
+            var resume = document.getElementById('resumeButton');
+            resume.addEventListener('click', function(event) {
+                if (spin == false) {
+                    queue()
+                        .defer(d3.json, "world-50m.json")
+                        .defer(d3.json, "data.json")
+                        .await(ready);
+                    
+                    spin = true;
+
+                    //remove all elements here, after resume spinning
+                    d3.select("#newsvg").remove();
+                }
+            }, false);
+
+        }, false);       
+        // end of pause and resume
+
+    </script>
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
