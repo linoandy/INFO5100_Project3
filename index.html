@@ -164,32 +164,6 @@
 
     <script>
 
-        // var width = 960,
-        //     height = 960;
-
-        // var projection = d3.geo.orthographic()
-        //     .translate([width / 2, height / 2])
-        //     .scale(width / 2 - 20)
-        //     .clipAngle(90)
-        //     .precision(0.6);
-
-        // var canvas = d3.select("canvas");
-        // var c = canvas.node().getContext("2d");
-
-        // var path = d3.geo.path()
-        //     .projection(projection)
-        //     .context(c);
-
-        // var title = d3.select("#headerText");
-
-        // var graph1, graph2;
-        // var countries,  countriesMilkPro, countriesMilkCon ,countriesMethane;
-
-        // queue()
-        //     .defer(d3.json, "world-110m.json")
-        //     .defer(d3.json, "data.json")
-        //     .await(ready);
-
         var i = -1,
         j = -1,
         k = -1,
@@ -199,79 +173,6 @@
             height = 960;
 
         var countries,  countriesMilkPro, countriesMilkCon ,countriesMethane;
-
-
-        // function ready(error, world, names) {
-        //   if (error) throw error;
-
-        //   var globe = {type: "Sphere"},
-        //       land = topojson.feature(world, world.objects.land);
-
-        //   countries = topojson.feature(world, world.objects.countries).features;
-        //   countriesMilkPro = topojson.feature(world, world.objects.countries).features;
-        //   countriesMilkCon = topojson.feature(world, world.objects.countries).features;
-        //   countriesMethane = topojson.feature(world, world.objects.countries).features;
-
-        //    var borders = topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }),
-        //       // i = -1,
-        //       // j = -1,
-        //       // k = -1,
-        //       // l = -1,
-        //       n = countries.length;
-
-        //   countries = countries.filter(function(d) {
-        //     return names.some(function(n) {
-        //       if (d.id == n.CountryID) return d.name = n.CountryName;
-        //     });
-        //   }).sort(function(a, b) {
-        //     return a.name.localeCompare(b.name);
-        //   });
-          
-        //    countriesMilkPro = countriesMilkPro.filter(function(d) {
-        //     return names.some(function(n) {
-        //       if (d.id == n.CountryID) return d.MPro = n.MPro;
-        //     });
-        //   });
-          
-        //      countriesMilkCon = countriesMilkCon.filter(function(d) {
-        //     return names.some(function(n) {
-        //       if (d.id == n.CountryID) return d.MCon = n.MCon;
-        //     });
-        //   });
-          
-        //      countriesMethane = countriesMethane.filter(function(d) {
-        //     return names.some(function(n) {
-        //       if (d.id == n.CountryID) return d.CH4 = n.CH4;
-        //     });
-        //   });
-
-        //   (function transition() {
-        //     d3.transition()
-        //         .duration(1250)
-        //         .each("start", function() {
-        //             title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro[j = (j + 1) % n].MPro + "<br/>" + "Milk consumption: "+countriesMilkCon[k = (k + 1) % n].MCon + "<br/>" + "Methane production: "+countriesMethane[l = (l + 1) % n].CH4);
-        //             //document.getElementById('graph').innerHTML = "this is a graph !!! " + i; // we can use this to plot graphs
-        //         })
-                
-        //         .tween("rotate", function() {
-        //           var p = d3.geo.centroid(countries[i]),
-        //               r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
-            
-        //           return function(t) {
-        //             projection.rotate(r(t));
-        //             c.clearRect(0, 0, width, height);
-        //             c.fillStyle = "#ccc", c.beginPath(), path(land), c.fill();
-        //             c.fillStyle = "#f00", c.beginPath(), path(countries[i]), c.fill();
-        //             c.strokeStyle = "#fff", c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
-        //             c.strokeStyle = "#000", c.lineWidth = 2, c.beginPath(), path(globe), c.stroke();
-        //           };
-        //         })
-
-        //       .transition()
-        //         .each("end", transition);
-        //   })();
-          
-        // }
 
         drawGlobe(i);
 
