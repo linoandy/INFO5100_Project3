@@ -88,6 +88,17 @@
         top: 10px;
         left: 0;
     }
+
+    .nav-tabs > li, .nav-pills > li {
+        float:none;
+        display:inline-block;
+        *display:inline; /* ie7 fix */
+         zoom:1; /* hasLayout ie7 trigger */
+    }
+
+    .nav-tabs, .nav-pills {
+        text-align:center;
+    }
     </
     </style>
 
@@ -146,14 +157,23 @@
             <div class="col-lg-12 .col-xs-12 .col-md-8 .col-sm-8 text-center">
                 <h1>Methane Productions</h1>
                 <p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
-                <ul class="list-unstyled">
-                    <li>Bootstrap v3.3.6</li>
-                    <!-- <li>jQuery v1.11.1</li> -->
-                </ul>
+                
                 <div id="earth">
                     <p id="headerText" ></p>
                 <!-- <canvas width=960 height=960 id="canvas"></canvas> -->
                 <!-- <p id="headerText" ></p> -->
+                   
+                    <div class = "row" id = 'yearButtons'>
+                         <ul id = "buttons" class="nav nav-pills" role="tablist">
+                          <li id = "year2011" role="presentation" class="active"><a href="#">2009 </a></li>
+                          <li id = "year2010" role="presentation"><a href="#">2010</a></li>
+                          <li id = "year2009" role="presentation"><a href="#">2011</a></li>
+                        </ul>
+                        <br>
+                        <div class = "div">
+                            <button id = "reset" class = "btn btn-success">Resume Globe</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -178,101 +198,136 @@
 
         d3.select(self.frameElement).style("height", height + "px");
 
+        //Remove year Buttons
+       document.getElementById('yearButtons').style.visibility = "hidden";
+
         // beginning of pause and resume
         var pause = document.getElementById('canvas');
         var spin = true;
         var svg1;
 
-        pause.addEventListener('click', function(event) {
-            if (spin) {
-                d3.selectAll("*") 
-                    .transition() 
-                    .duration( 0 );
+        // pause.addEventListener('click', function(event) {
+        //     if (spin) {
+        //         d3.selectAll("*") 
+        //             .transition() 
+        //             .duration( 0 );
 
-                spin = false;
-                // create a svg, this is where the bar graph goes
-                var earthDivWidth = document.getElementById('earth').offsetWidth;
-                var earthDivHeight = document.getElementById('earth').offsetHeight;
+        //         spin = false;
+        //         // create a svg, this is where the bar graph goes
+        //         var earthDivWidth = document.getElementById('earth').offsetWidth;
+        //         var earthDivHeight = document.getElementById('earth').offsetHeight;
 
-                console.log(earthDivWidth);
-                console.log(earthDivHeight);
-                svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg");
+        //         console.log(earthDivWidth);
+        //         console.log(earthDivHeight);
+        //         svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg");
 
-                // draw a rectangle on svg to cover the background globe
-                svg1.append("rect")
-                    .attr("id", "overlayRect")
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr("width", 1400)
-                    .attr("height", 1600)
-                    .style("fill","black")
-                    .style("opacity","0.5");
+        //         // draw a rectangle on svg to cover the background globe
+        //         svg1.append("rect")
+        //             .attr("id", "overlayRect")
+        //             .attr("x", 0)
+        //             .attr("y", 0)
+        //             .attr("width", 1400)
+        //             .attr("height", 1600)
+        //             .style("fill","black")
+        //             .style("opacity","0.0");
 
-                svg1.append("rect")
-                    .attr("id", "resumeButton")
-                    .attr("x", 30)
-                    .attr("y", 30)
-                    .attr("width", 90)
-                    .attr("height", 50)
-                    .style("fill","white")
-                    .style("opacity","0.85");
+        //         svg1.append("rect")
+        //             .attr("id", "resumeButton")
+        //             .attr("x", 30)
+        //             .attr("y", 30)
+        //             .attr("width", 90)
+        //             .attr("height", 50)
+        //             .style("fill","white")
+        //             .style("opacity","0.85");
 
-                svg1.append("text")
-                    .text("Resume")
-                    .attr("x",75)
-                    .attr("y",40)
-                    .style("font-size","15px")
-                    .style("text-anchor", "middle")
-                    .style("alignment-baseline","middle")
-                    .style("fill", "black");
+        //         svg1.append("text")
+        //             .text("Resume")
+        //             .attr("x",75)
+        //             .attr("y",40)
+        //             .style("font-size","15px")
+        //             .style("text-anchor", "middle")
+        //             .style("alignment-baseline","middle")
+        //             .style("fill", "black");
+
+        //         var earth = document.getElementById('#earth');
+        //         var row = document.createElement('div');
+        //         row.classList.add("row");
+        //         earth.appendChild(row);
+        //         // <div class = "row">
+        //         //     <div id = "learnMoreButtons" class = "div">
+        //         //         <span id = "category" class = "span">All Categories</span>
+        //         //     </div>
+
+        //         //     <div id = "buttons" class = "div">
+        //         //         <button id = "salary" class = "button">Median Annual Salary</button>
+        //         //         <button id = "genderRatio" class = "button">Gender Ratio</button>
+        //         //         <button id = "employedRatio" class = "button">Employed Statistics</button>
+        //         //     </div>
+
+        //         //     <div class = "div">
+        //         //         <button id = "reset" class = "button2">Return to All Categories</button>
+        //         //     </div>
+
+        //         //     <div id = "showRatio" class = "div2" style = "left: 100px">
+        //         //         <span id = "female"></span>
+        //         //         <span id = "male"></span>
+        //         //     </div>
+
+        //         //     <div id = "comparision" class = "div"></div>
+
+        //         //     <div class = "div">
+        //         //         <small>Data source: <a href = "https://github.com/fivethirtyeight/data/tree/master/college-majors">https://github.com/fivethirtyeight/data/tree/master/college-majors</a>
+        //         //         </small>
+        //         //     </div>
+        //         // </div>
 
 
-                d3.select("#canvas").remove();
-                document.getElementById('headerText').style.visibility = "hidden";
-                /*Calling bar graphs*/
-                draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[i].MPro});
-                draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[i].CH4})
+        //         d3.select("#canvas").remove();
+        //         document.getElementById('headerText').style.visibility = "hidden";
+        //         /*Calling bar graphs*/
+        //         draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[i].MPro});
+        //         draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[i].CH4})
 
-                // draw_graph1({"CountryName":'China' , "MPro": 41434820});
-                // draw_graph2({"CountryName": 'China' ,"Methane": 340141.2574})
+        //         // draw_graph1({"CountryName":'China' , "MPro": 41434820});
+        //         // draw_graph2({"CountryName": 'China' ,"Methane": 340141.2574})
 
 
-            };
+        //     };
 
             
-            var resume = document.getElementById('resumeButton');
-            resume.addEventListener('click', function(event) {
-                d3.select("#canvas").remove();
-                drawGlobe(i);
-                //pauseAndResume();
-                if (spin == false) {
-                    queue()
-                        .defer(d3.json, "world-110m.json")
-                        .defer(d3.json, "data.json");
-                        // .await(ready);
+        //     var resume = document.getElementById('resumeButton');
+        //     resume.addEventListener('click', function(event) {
+        //         d3.select("#canvas").remove();
+        //         drawGlobe(i);
+        //         //pauseAndResume();
+        //         if (spin == false) {
+        //             queue()
+        //                 .defer(d3.json, "world-110m.json")
+        //                 .defer(d3.json, "data.json");
+        //                 // .await(ready);
                     
                     
-                    spin = true;
+        //             spin = true;
 
-                    //remove all elements here, after resume spinning
-                    d3.select("#newsvg").remove();
-                    d3.select("#overlayRect").remove();
-                    d3.select("#resumeButtons").remove();
-                    document.getElementById('headerText').style.visibility = "visible";
-                    d3.select("#milkDiv").remove();
-                    d3.select("#methaneDiv").remove();
+        //             //remove all elements here, after resume spinning
+        //             d3.select("#newsvg").remove();
+        //             d3.select("#overlayRect").remove();
+        //             d3.select("#resumeButtons").remove();
+        //             document.getElementById('headerText').style.visibility = "visible";
+        //             d3.select("#milkDiv").remove();
+        //             d3.select("#methaneDiv").remove();
 
-                    // for(var i = 0; i < x.length; i++){
-                    //     x[i].remove();
-                    // }
+        //             // for(var i = 0; i < x.length; i++){
+        //             //     x[i].remove();
+        //             // }
                         
-                    d3.selectAll('.svg-container').remove();
+        //             d3.selectAll('.svg-container').remove();
                     
-                }
-            }, false);
+        //         }
+        //     }, false);
 
-        }, false);       
-        // end of pause and resume
+        // }, false);       
+        // // end of pause and resume
 
         function drawGlobe (ind) {
             i = ind;
@@ -406,7 +461,7 @@
                         .attr("width", 1400)
                         .attr("height", 1600)
                         .style("fill","black")
-                        .style("opacity","0.5");
+                        .style("opacity","0.05");
 
                     svg1.append("rect")
                         .attr("id", "resumeButton")
@@ -426,6 +481,11 @@
                         .style("alignment-baseline","middle")
                         .style("fill", "black");
 
+                    // var para = document.createElement("button");                       // Create a <p> element
+                    // var t = document.createTextNode("This is a paragraph");       // Create a text node
+                    // para.appendChild(t);                                          // Append the text to <p>
+                    // var earth = document.getElementById('earth');
+                    // earth.appendChild(para); 
                     // var svg2 = svg1.append('svg')
                     //     .attr("id", "graphSVG")
                     //     .attr("width", 1400)
@@ -434,6 +494,9 @@
 
                     d3.select("#canvas").remove();
                     document.getElementById('headerText').style.visibility = "hidden";
+
+                     //Show year Buttons
+                    document.getElementById('yearButtons').style.visibility = "visible";
                     /*Calling bar graphs*/
                     draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[i].MPro});
                     draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[i].CH4})
@@ -466,6 +529,9 @@
                         document.getElementById('headerText').style.visibility = "visible";
                         d3.select("#milkDiv").remove();
                         d3.select("#methaneDiv").remove();
+                        
+                        //Remove year Buttons
+                        document.getElementById('yearButtons').style.visibility = "hidden";
 
                         // for(var i = 0; i < x.length; i++){
                         //     x[i].remove();
