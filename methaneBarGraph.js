@@ -3,30 +3,30 @@ function draw_graph2(value){
 var data2 = [
   {
     "CountryName": "India",
-    "CH4": 430474.7828
+    "Me2011": 430474.7828
   },
   {
     "CountryName": "China",
-    "CH4": 340141.2574
+    "Me2011": 340141.2574
   },
   {
     "CountryName": "Brazil",
-    "CH4": 279066.0728
+    "Me2011": 279066.0728
   },
   {
     "CountryName": "United States",
-    "CH4": 172647.1441
+    "Me2011": 172647.1441
   },
   {
     "CountryName": "Australia",
-    "CH4": 94049.5226
+    "Me2011": 94049.5226
   }
  ];  
 var data = data2;
 data.push(value);
 data.sort(function(obj1, obj2) {
 	// Ascending: first age less than the previous
-	return obj2.CH4 - obj1.CH4;
+	return obj2.Me2011 - obj1.Me2011;
 }) ;
 console.log(data);
 var xgraph, ygraph;
@@ -118,7 +118,7 @@ var svg = d3.select("#earth").append("div")
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) { return y(d.value); })
       .style("fill", function(d) { return color(d.name) ; })
-	  .style("opacity", function(d) { if (d.value == value.CH4) return 1; else return 0.5 ; });
+	  .style("opacity", function(d) { if (d.value == value.Me2011) return 1; else return 0.5 ; });
 
   var legend = svg.selectAll(".legend")
       .data(ageNames.slice().reverse())

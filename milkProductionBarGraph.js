@@ -4,30 +4,30 @@ var cname = value.CountryName;
 var data1 = [
   {
     "CountryName": "India",
-    "MPro": 123400000,
+    "MPro2011": 123400000,
   },
   {
     "CountryName": "China",
-    "MPro": 41434820,
+    "MPro2011": 41434820,
   },
   {
     "CountryName": "Brazil",
-    "MPro": 32245524,
+    "MPro2011": 32245524,
   },
   {
     "CountryName": "United States",
-    "MPro": 89015235,
+    "MPro2011": 89015235,
   },
   {
     "CountryName": "Pakistan",
-    "MPro": 36656000,
+    "MPro2011": 36656000,
   }
  ];
 var data = data1;
 data.push(value);
 data.sort(function(obj1, obj2) {
   // Descending: first age less than the previous
-  return obj2.MPro - obj1.MPro;
+  return obj2.MPro2011 - obj1.MPro2011;
 }) ;
 console.log(data);
 var xgraph, ygraph;
@@ -115,7 +115,7 @@ var svg = d3.select("#earth").append("div")
       .attr("y", function(d) { return y(d.value); })
     .style("fill", function(d) { return color(d.name) ; })
     //.style("opacity", function(d) { if (data.CountryName == value.CountryName) return 1; else return 0.5 ; });
-    .style("opacity", function(d) { if (d.value == value.MPro) return 1; else return 0.5 ; });
+    .style("opacity", function(d) { if (d.value == value.MPro2011) return 1; else return 0.5 ; });
 
   var legend = svg.selectAll(".legend")
       .data(ageNames.slice().reverse())
@@ -137,4 +137,4 @@ var svg = d3.select("#earth").append("div")
       .text(function(d) { return d; });
     
 }
-//draw_graph1({"CountryName": "Poland", "MPro": 12434067});
+//draw_graph1({"CountryName": "Poland", "MPro2011": 12434067});
