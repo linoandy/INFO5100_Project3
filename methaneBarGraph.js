@@ -26,11 +26,11 @@ var data = data2;
 data.push(value);
 data.sort(function(obj1, obj2) {
 	// Ascending: first age less than the previous
-	return obj2.MPro - obj1.MPro;
+	return obj2.CH4 - obj1.CH4;
 }) ;
 console.log(data);
 var xgraph, ygraph;
-var margin = {top: 20, right: 20, bottom: 30, left: 100},
+var margin = {top: 20, right: 20, bottom: 30, left: 200},
     width = 600 - margin.left - margin.right,
     height = 200 - margin.top - margin.bottom;
 
@@ -52,7 +52,8 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .tickFormat(d3.format(".2s"));
+    .tickFormat(d3.format(".2s"))
+    .ticks(5);
 
 var svg = d3.select("#earth").append("div")
    .classed("svg-container", true).append("svg")
@@ -77,14 +78,17 @@ var svg = d3.select("#earth").append("div")
   xgraph = svg.append("g");
       xgraph.attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll('text')
+              .style("text-anchor", "end")
+              .attr("transform", "rotate(-35)");;;
 
   ygraph = svg.append("g");
       ygraph.attr("class", "y axis")
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 1)
+      .attr("y", -55)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Giga Grams");
@@ -100,13 +104,19 @@ var svg = d3.select("#earth").append("div")
     .enter().append("rect")
       .attr("width", x1.rangeBand())
       .attr("x", function(d) { return x1(d.name); })
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); })
+      // .attr("y", function(d) { return y(d.value); })
+      // .attr("height", function(d) { return height - y(d.value); })
+      .attr("y", function(d) { return height; })
+      .attr("height",0)
 	  .transition()
-		.duration(600)
-		.delay(function (d, i) {
-		return i * 5;
-		})
+  		// .duration(1000)
+  		// .delay(function (d, i) {
+  		// return i * 5;
+  		// })
+      .attr("height", 0)
+      .transition().duration(1000).ease("quad")
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("y", function(d) { return y(d.value); })
       .style("fill", function(d) { return color(d.name) ; })
 	  .style("opacity", function(d) { if (d.value == value.CH4) return 1; else return 0.5 ; });
 

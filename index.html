@@ -78,7 +78,7 @@
         display: inline-block;
         position: relative;
         width: 100%;
-        padding-bottom: 25%; /* aspect ratio */
+        padding-bottom: 35%; /* aspect ratio */
         vertical-align: top;
         overflow: hidden;
     }
@@ -186,7 +186,7 @@
         // var countries,  countriesMilkPro, countriesMilkCon ,countriesMethane;
 
         // queue()
-        //     .defer(d3.json, "world-50m.json")
+        //     .defer(d3.json, "world-110m.json")
         //     .defer(d3.json, "data.json")
         //     .await(ready);
 
@@ -334,8 +334,8 @@
                 d3.select("#canvas").remove();
                 document.getElementById('headerText').style.visibility = "hidden";
                 /*Calling bar graphs*/
-                draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[j].MPro});
-                draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[l].CH4})
+                draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[i].MPro});
+                draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[i].CH4})
 
                 // draw_graph1({"CountryName":'China' , "MPro": 41434820});
                 // draw_graph2({"CountryName": 'China' ,"Methane": 340141.2574})
@@ -351,7 +351,7 @@
                 //pauseAndResume();
                 if (spin == false) {
                     queue()
-                        .defer(d3.json, "world-50m.json")
+                        .defer(d3.json, "world-110m.json")
                         .defer(d3.json, "data.json");
                         // .await(ready);
                     
@@ -381,6 +381,7 @@
         function drawGlobe (ind) {
             i = ind;
 
+
             d3.select('#earth').append('canvas')
                 .attr('width', 960)
                 .attr('height',960)
@@ -403,7 +404,7 @@
             var title = d3.select("#headerText");
 
             queue()
-                .defer(d3.json, "world-50m.json")
+                .defer(d3.json, "world-110m.json")
                 .defer(d3.json, "data.json")
                 .await(ready);
 
@@ -423,14 +424,12 @@
                   // j = -1,
                   // k = -1,
                   // l = -1,
-                  n = countries.length;
+                  n = 50;
 
               countries = countries.filter(function(d) {
                 return names.some(function(n) {
                   if (d.id == n.CountryID) return d.name = n.CountryName;
                 });
-              }).sort(function(a, b) {
-                return a.name.localeCompare(b.name);
               });
               
                countriesMilkPro = countriesMilkPro.filter(function(d) {
@@ -453,10 +452,11 @@
 
               (function transition() {
                 d3.transition()
-                    .duration(1250)
+                    .duration(3000)
                     .each("start", function() {
-                        title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro[j = (j + 1) % n].MPro + "<br/>" + "Milk consumption: "+countriesMilkCon[k = (k + 1) % n].MCon + "<br/>" + "Methane production: "+countriesMethane[l = (l + 1) % n].CH4);
+                        title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro[i].MPro + "<br/>" + "Milk consumption: "+countriesMilkCon[i].MCon + "<br/>" + "Methane production: "+countriesMethane[i].CH4);
                         //document.getElementById('graph').innerHTML = "this is a graph !!! " + i; // we can use this to plot graphs
+                        console.log("i = ", i);
                     })
                     
                     .tween("rotate", function() {
@@ -539,8 +539,8 @@
                     d3.select("#canvas").remove();
                     document.getElementById('headerText').style.visibility = "hidden";
                     /*Calling bar graphs*/
-                    draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[j].MPro});
-                    draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[l].CH4})
+                    draw_graph1({"CountryName":countries[i].name , "MPro": countriesMilkPro[i].MPro});
+                    draw_graph2({"CountryName": countries[i].name,"CH4": countriesMethane[i].CH4})
 
                     // draw_graph1({"CountryName":'China' , "MPro": 41434820});
                     // draw_graph2({"CountryName": 'China' ,"Methane": 340141.2574})
@@ -552,9 +552,11 @@
                 var resume = document.getElementById('resumeButton');
                 resume.addEventListener('click', function(event) {
                     drawGlobe(i);
+                    console.log("drawglobe in resume i = ", i);
+
                     if (spin == false) {
                         queue()
-                            .defer(d3.json, "world-50m.json")
+                            .defer(d3.json, "world-110m.json")
                             .defer(d3.json, "data.json");
                             // .await(ready);
                         
