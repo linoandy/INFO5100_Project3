@@ -163,7 +163,7 @@
                 <!-- <canvas width=960 height=960 id="canvas"></canvas> -->
                 <!-- <p id="headerText" ></p> -->
                    
-                    <div class = "row" id = 'yearButtons'>
+                    <!-- <div class = "row" id = 'yearButtons'>
                          <ul id = "buttons" class="nav nav-pills" role="tablist">
                           <li id = "year2011" role="presentation" class="active"><a href="#">2009 </a></li>
                           <li id = "year2010" role="presentation"><a href="#">2010</a></li>
@@ -173,7 +173,7 @@
                         <div class = "div">
                             <button id = "reset" class = "btn btn-success">Resume Globe</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -199,7 +199,7 @@
         d3.select(self.frameElement).style("height", height + "px");
 
         //Remove year Buttons
-       document.getElementById('yearButtons').style.visibility = "hidden";
+       // document.getElementById('yearButtons').style.visibility = "hidden";
 
         // beginning of pause and resume
         var pause = document.getElementById('canvas');
@@ -328,15 +328,17 @@
 
                     console.log(earthDivWidth);
                     console.log(earthDivHeight);
-                    svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg");
+                    svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg").attr("preserveAspectRatio", "xMinYMin meet").attr("viewBox", "0 0 800 800")
+					   //class to make it responsive
+					   .classed("svg-content-responsive", true) ;
 
                     // draw a rectangle on svg to cover the background globe
                     svg1.append("rect")
                         .attr("id", "overlayRect")
                         .attr("x", 0)
                         .attr("y", 0)
-                        .attr("width", 1400)
-                        .attr("height", 1600)
+                        .attr("width", "100%")
+                        .attr("height", "100%")
                         .style("fill","black")
                         .style("opacity","0.05");
 
@@ -358,6 +360,112 @@
                         .style("alignment-baseline","middle")
                         .style("fill", "black");
 
+                    // beginning of radio button
+                    var w= 1400;
+		            var h= 125;
+		            // var svg= svg1
+		            //             .append("svg")
+		            //             .attr("width",w)
+		            //             .attr("height",h)
+
+		            //backdrop of color
+		           	// var background= svg.append("rect")
+		            //                     .attr("id","backgroundRect")
+		            //                     .attr("width","100%")
+		            //                     .attr("height","100%")
+		            //                     .attr("x",0)
+		            //                     .attr("y",0)
+		            //                     .attr("fill","#DAC99A")
+
+		            //text that the radio button will toggle
+		            var number= svg1.append("text")
+		                            .attr("id","numberToggle")
+		                            .attr("x",120)
+		                            .attr("y",90)
+		                            .attr("fill","green")
+		                            .attr("font-size",24)
+		                            .text("[click a button]")
+
+		            //container for all buttons
+		            var allButtons= svg1.append("g")
+		                                .attr("id","allButtons") 
+
+		            //fontawesome button labels
+		            var labels= ['2009','2010','2011'];
+
+		            //colors for different button states 
+		            var defaultColor= "#7777BB"
+		            var hoverColor= "#0000ff"
+		            var pressedColor= "#000077"
+
+		            //groups for each button (which will hold a rect and text)
+		            var buttonGroups= allButtons.selectAll("g.button")
+		                                    .data(labels)
+		                                    .enter()
+		                                    .append("g")
+		                                    .attr("class","button")
+		                                    .style("cursor","pointer")
+		                                    .on("click",function(d,i) {
+		                                    	// call drawgraph1 and drawgraph2 should go inside here
+		                                        updateButtonColors(d3.select(this), d3.select(this.parentNode))
+		                                        d3.select("#numberToggle").text(i+2009)
+		                                    })
+		                                    .on("mouseover", function() {
+		                                        if (d3.select(this).select("rect").attr("fill") != pressedColor) {
+		                                            d3.select(this)
+		                                                .select("rect")
+		                                                .attr("fill",hoverColor);
+		                                        }
+		                                    })
+		                                    .on("mouseout", function() {
+		                                        if (d3.select(this).select("rect").attr("fill") != pressedColor) {
+		                                            d3.select(this)
+		                                                .select("rect")
+		                                                .attr("fill",defaultColor);
+		                                        }
+		                                    })
+
+		            var bWidth= 80; //button width
+		            var bHeight= 40; //button height
+		            var bSpace= 10; //space between buttons
+		            var x0= 250; //x offset
+		            var y0= 100; //y offset
+
+		            //adding a rect to each toggle button group
+		            //rx and ry give the rect rounded corner
+		            buttonGroups.append("rect")
+		                        .attr("class","buttonRect")
+		                        .attr("width",bWidth)
+		                        .attr("height",bHeight)
+		                        .attr("x",function(d,i) {return x0+(bWidth+bSpace)*i;})
+		                        .attr("y",y0)
+		                        .attr("rx",5) //rx and ry give the buttons rounded corners
+		                        .attr("ry",5)
+		                        .attr("fill",defaultColor)
+
+		            //adding text to each toggle button group, centered 
+		            //within the toggle button rect
+		            buttonGroups.append("text")
+		                        .attr("class","buttonText")
+		                        .attr("font-family","FontAwesome")
+		                        .attr("x",function(d,i) {
+		                            return x0 + (bWidth+bSpace)*i + bWidth/2;
+		                        })
+		                        .attr("y",y0+bHeight/2)
+		                        .attr("text-anchor","middle")
+		                        .attr("dominant-baseline","central")
+		                        .attr("fill","white")
+		                        .text(function(d) {return d;})
+
+		            function updateButtonColors(button, parent) {
+		                parent.selectAll("rect")
+		                        .attr("fill",defaultColor)
+
+		                button.select("rect")
+		                        .attr("fill",pressedColor)
+		            }
+                    // end of radio button
+
                     // var para = document.createElement("button");                       // Create a <p> element
                     // var t = document.createTextNode("This is a paragraph");       // Create a text node
                     // para.appendChild(t);                                          // Append the text to <p>
@@ -373,7 +481,7 @@
                     document.getElementById('headerText').style.visibility = "hidden";
 
                      //Show year Buttons
-                    document.getElementById('yearButtons').style.visibility = "visible";
+                    // document.getElementById('yearButtons').style.visibility = "visible";
                     /*Calling bar graphs*/
                     draw_graph1({"CountryName":countries[i].name , "MPro2011": countriesMilkPro[i].MPro2011});
                     draw_graph2({"CountryName": countries[i].name,"Me2011": countriesMethane[i].Me2011})
@@ -408,7 +516,7 @@
                         d3.select("#methaneDiv").remove();
                         
                         //Remove year Buttons
-                        document.getElementById('yearButtons').style.visibility = "hidden";
+                        // document.getElementById('yearButtons').style.visibility = "hidden";
 
                         // for(var i = 0; i < x.length; i++){
                         //     x[i].remove();
