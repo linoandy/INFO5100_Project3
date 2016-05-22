@@ -162,7 +162,8 @@
         var i = -1,
         j = -1,
         k = -1,
-        l = -1;
+        l = -1,
+        ctyname;
 
         var width = 960,
             height = 960;
@@ -282,8 +283,9 @@
                     .duration(1250)
                     .each("start", function() {
                         title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro2011[i].MPro2011 + " Tons <br/>" + "Methane production: "+countriesMethane2011[i].Me2011+ " Gigagrams");
+                        ctyname = countries[i].name
                         //document.getElementById('graph').innerHTML = "this is a graph !!! " + i; // we can use this to plot graphs
-                        console.log("i = ", i);
+                        console.log("i = ", i, ctyname);
                     })
                     
                     .tween("rotate", function() {
@@ -374,6 +376,17 @@
                         .style("fill", "white");
 
 
+                    // Display country name on click
+                    svg1.append("text")
+                        .text(ctyname)
+                        .attr("font-family","FontAwesome")
+                        .attr("id","resumeButton")
+                        .attr("x",700)
+                        .attr("y",80)
+                        .style("font-size","32px")
+                        .style("text-anchor", "middle")
+                        .style("alignment-baseline","middle")
+                        .style("fill", "black");
 
 
                     // beginning of radio button
