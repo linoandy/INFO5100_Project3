@@ -97,7 +97,7 @@ function draw_graph2(year, value){
   console.log(data);
 
 var xgraph, ygraph;
-var margin = {top: 20, right: 100, bottom: 30, left: 100},
+var margin = {top: 20, right: 150, bottom: 30, left: 150},
     width = 1400 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -150,16 +150,19 @@ var svg = svg1
       .call(xAxis)
       .selectAll('text')
               .style("text-anchor", "end")
+              .style("font-size", 22)
               .attr("transform", "rotate(-35)");;;
 
   ygraph = svg.append("g");
       ygraph.attr("class", "y axis")
-      .call(yAxis)
+      .call(yAxis)    
+      .style("font-size", "20px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -55)
+      .attr("y", -75)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
+      .style("font-size", "20px")
       .text("Giga Grams");
 
   var state = svg.selectAll(".state")
