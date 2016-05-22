@@ -113,7 +113,7 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 var color = d3.scale.ordinal()
-    .range(["#98abc5"]);
+    .range(["#2b8cbe"]);
 
 var xAxis = d3.svg.axis()
     .scale(x0)
@@ -211,7 +211,7 @@ var svg = svg1
   .attr("class", "bartext")
   .attr("text-anchor", "middle")
   .attr("fill", "black")
-  .attr("font-size","30px")
+  .attr("font-size","28px")
   .attr("x", function(d) { return x1.rangeBand()/2; })
   .attr("y", function(d) { return y(d.value); })
   //.attr("transform", "rotate(-10)")

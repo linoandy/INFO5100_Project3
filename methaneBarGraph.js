@@ -213,7 +213,7 @@ var svg = svg1
   .attr("class", "bartext")
   .attr("text-anchor", "middle")
   .attr("fill", "black")
-  .attr("font-size","30px")
+  .attr("font-size","28px")
   .attr("x", function(d) { return x1.rangeBand()/2; })
   .attr("y", function(d) { return y(d.value); })
   //.attr("transform", "rotate(-10)")
