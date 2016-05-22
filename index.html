@@ -38,6 +38,7 @@
             width: 100%;
             height: auto;
             background-color:white;
+            cursor: pointer;
         }
     }
     #headerText {
@@ -150,13 +151,16 @@
         <!-- /.container -->
     </nav>
 
+
     <!-- Page Content -->
     <div class="container">
 
         <div class="row">
             <div class="col-lg-12 .col-xs-12 .col-md-8 .col-sm-8 text-center">
-                <h1>Methane Productions</h1>
-                <p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
+                <div id="mainheading">
+                    <h1>Methane Productions</h1>
+                    <p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
+                </div>
                 
                 <div id="earth">
                     <p id="headerText" ></p>
@@ -208,7 +212,7 @@
 
         function drawGlobe (ind) {
             i = ind;
-
+            document.getElementById('mainheading').style.visibility = "visible";
 
             d3.select('#earth').append('canvas')
                 .attr('width', 960)
@@ -315,7 +319,9 @@
         function pauseAndResume () {
            pause = document.getElementById('canvas');
 
+
             pause.addEventListener('click', function(event) {
+                document.getElementById('mainheading').style.visibility = "hidden";
                 if (spin) {
                     d3.selectAll("*") 
                         .transition() 
@@ -338,27 +344,31 @@
                         .attr("x", 0)
                         .attr("y", 0)
                         .attr("width", "100%")
-                        .attr("height", "100%")
+                        .attr("height", "150%")
                         .style("fill","black")
                         .style("opacity","0.05");
 
                     svg1.append("rect")
                         .attr("id", "resumeButton")
-                        .attr("x", 30)
-                        .attr("y", 30)
-                        .attr("width", 90)
-                        .attr("height", 50)
-                        .style("fill","white")
-                        .style("opacity","0.85");
+                        .style("cursor","pointer")
+                        .attr("x", 340)
+                        .attr("y", 130)
+                        .attr("rx", 5)
+                        .attr("ry", 5)
+                        .attr("width", 80)
+                        .attr("height", 40)
+                        .style("fill","green");
 
                     svg1.append("text")
                         .text("Resume")
-                        .attr("x",75)
-                        .attr("y",40)
+                        .attr("font-family","FontAwesome")
+                        .attr("id","resumeButton")
+                        .attr("x",380)
+                        .attr("y",150)
                         .style("font-size","15px")
                         .style("text-anchor", "middle")
                         .style("alignment-baseline","middle")
-                        .style("fill", "black");
+                        .style("fill", "white");
 
                     // beginning of radio button
                     var w= 1400;
@@ -429,7 +439,7 @@
 		            var bHeight= 40; //button height
 		            var bSpace= 10; //space between buttons
 		            var x0= 250; //x offset
-		            var y0= 100; //y offset
+		            var y0= 80; //y offset
 
 		            //adding a rect to each toggle button group
 		            //rx and ry give the rect rounded corner

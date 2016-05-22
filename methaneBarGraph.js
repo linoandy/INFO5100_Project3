@@ -55,11 +55,13 @@ var yAxis = d3.svg.axis()
     .tickFormat(d3.format(".2s"))
     .ticks(5);
 
-var svg = d3.select("#earth").append("div")
+var svg = svg1
    .classed("svg-container", true).append("svg")
    .attr('id', 'methaneDiv')
 	.attr("preserveAspectRatio", "xMinYMin meet")
    .attr("viewBox", "0 0 800 600")
+   .attr("x", 0)
+   .attr("y",600)
    //class to make it responsive
    .classed("svg-content-responsive", true) 
   .append("g")
@@ -119,6 +121,21 @@ var svg = d3.select("#earth").append("div")
       .attr("y", function(d) { return y(d.value); })
       .style("fill", function(d) { return color(d.name) ; })
 	  .style("opacity", function(d) { if (d.value == value.Me2011) return 1; else return 0.5 ; });
+
+  state.selectAll(".bartext")
+  .data(function(d) { return d.ages; })
+  .enter()
+  .append("text")
+  .attr("class", "bartext")
+  .attr("text-anchor", "middle")
+  .attr("fill", "black")
+  .attr("font-size","10px")
+  .attr("x", function(d) { return x1.rangeBand()/2; })
+  .attr("y", function(d) { return y(d.value); })
+  //.attr("transform", "rotate(-10)")
+  .text(function(d){
+     return Math.floor(d.value);
+  });
 
   var legend = svg.selectAll(".legend")
       .data(ageNames.slice().reverse())

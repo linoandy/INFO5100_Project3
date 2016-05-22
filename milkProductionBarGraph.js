@@ -56,11 +56,13 @@ var yAxis = d3.svg.axis()
     .tickFormat(d3.format(".2s"))
     .ticks(5);
 
-var svg = d3.select("#earth").append("div")
+var svg = svg1
    .classed("svg-container", true).append("svg")
    .attr('id', 'milkDiv')
   .attr("preserveAspectRatio", "xMinYMin meet")
    .attr("viewBox", "0 0 800 800")
+   .attr("x", 0)
+   .attr("y",200)
    //class to make it responsive
    .classed("svg-content-responsive", true) 
   .append("g")
@@ -116,6 +118,21 @@ var svg = d3.select("#earth").append("div")
     .style("fill", function(d) { return color(d.name) ; })
     //.style("opacity", function(d) { if (data.CountryName == value.CountryName) return 1; else return 0.5 ; });
     .style("opacity", function(d) { if (d.value == value.MPro2011) return 1; else return 0.5 ; });
+
+  state.selectAll(".bartext")
+  .data(function(d) { return d.ages; })
+  .enter()
+  .append("text")
+  .attr("class", "bartext")
+  .attr("text-anchor", "middle")
+  .attr("fill", "black")
+  .attr("font-size","10px")
+  .attr("x", function(d) { return x1.rangeBand()/2; })
+  .attr("y", function(d) { return y(d.value); })
+  //.attr("transform", "rotate(-10)")
+  .text(function(d){
+     return Math.floor(d.value);
+  });
 
   var legend = svg.selectAll(".legend")
       .data(ageNames.slice().reverse())
