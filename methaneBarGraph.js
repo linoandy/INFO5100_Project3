@@ -144,26 +144,27 @@ var svg = svg1
   x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
   y.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
 
-  xgraph = svg.append("g");
+   xgraph = svg.append("g");
       xgraph.attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll('text')
               .style("text-anchor", "end")
-              .style("font-size", 22)
-              .attr("transform", "rotate(-35)");;;
+              .style("font-size", "30px")
+              .attr("transform", "rotate(-35)");;
+
 
   ygraph = svg.append("g");
       ygraph.attr("class", "y axis")
-      .call(yAxis)    
-      .style("font-size", "20px")
+      .call(yAxis)
+      .style("font-size", "30px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -75)
+      .attr("y", -120)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .style("font-size", "20px")
-      .text("Giga Grams");
+      .style("font-size", "30px")
+      .text("Giga grams");
 
   var state = svg.selectAll(".state")
       .data(data)
@@ -194,15 +195,15 @@ var svg = svg1
 
       if(year == 2011){
         console.log('d.value: ', d.value, ' value.Me2011: ', value.Me2011);
-        if (d.value == value.Me2011) return 1; else return 0.5 ; 
+        if (d.value == value.Me2011) return 1; else return 0.4 ; 
         }
         else if(year == 2010){
           console.log('d.value: ', d.value, ' value.Me2010: ', value.Me2010);
-          if (d.value == value.Me2010) return 1; else return 0.5 ; 
+          if (d.value == value.Me2010) return 1; else return 0.4 ; 
         }
         else if(year == 2009){
           console.log('d.value: ', d.value, ' value.Me2009: ', value.Me2009);
-          if (d.value == value.Me2009) return 1; else return 0.5 ; 
+          if (d.value == value.Me2009) return 1; else return 0.4 ; 
         }
 
         //if (d.value == value.Me2011) return 1; else return 0.5 ; 
@@ -232,15 +233,16 @@ var svg = svg1
 
   legend.append("rect")
       .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
+      .attr("width", 30)
+      .attr("height", 30)
       .style("fill", color);
 
   legend.append("text")
       .attr("x", width - 24)
-      .attr("y", 9)
+      .attr("y", 15)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d; });
+      .attr("font-size", 25)
+      .text( 'Methane Emissions');
 }
 // draw_graph1({"CountryName": "Poland","Methane": 65195.43074});

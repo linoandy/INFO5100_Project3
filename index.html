@@ -22,6 +22,10 @@
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
 
+    p{
+        font-size: 5;
+    }
+
     #canvas {
         display: block;
         padding: 0;
@@ -129,26 +133,12 @@
         <div class="row">
             <div class="col-lg-12 .col-xs-12 .col-md-8 .col-sm-8 text-center">
                 <div id="mainheading">
-                    <h1>Methane Productions</h1>
-                    <p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
+                    <h3> Milk Production and Agricultural Methane Emissions by Top 50 Countries</h3>
+                    <p class="lead">Methane is one of the prevalent greenhouse gases that causes global warming. Agricultural activities, such as milk production, is one of the primary sources of methane emissions. Therefore, in this project, we set out to look at the top 50 countries with milk production and its correlation with methane emissions.</p>
                 </div>
                 
                 <div id="earth">
                     <p id="headerText" ></p>
-                <!-- <canvas width=960 height=960 id="canvas"></canvas> -->
-                <!-- <p id="headerText" ></p> -->
-                   
-                    <!-- <div class = "row" id = 'yearButtons'>
-                         <ul id = "buttons" class="nav nav-pills" role="tablist">
-                          <li id = "year2011" role="presentation" class="active"><a href="#">2009 </a></li>
-                          <li id = "year2010" role="presentation"><a href="#">2010</a></li>
-                          <li id = "year2009" role="presentation"><a href="#">2011</a></li>
-                        </ul>
-                        <br>
-                        <div class = "div">
-                            <button id = "reset" class = "btn btn-success">Resume Globe</button>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -224,12 +214,9 @@
               countriesMethane = topojson.feature(world, world.objects.countries).features;
 
                var borders = topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }),
-                  // i = -1,
-                  // j = -1,
-                  // k = -1,
-                  // l = -1,
-                  n = 50;
+                  n = 50; //Number of countries
 
+              //Store data 
               countries = countries.filter(function(d) {
                 return names.some(function(n) {
                   if (d.id == n.CountryID) return d.name = n.CountryName;
@@ -357,63 +344,89 @@
                         .attr("id", "resumeButton")
                         .style("cursor","pointer")
                         .attr("x", 600)
-                        .attr("y", 180)
+                        .attr("y", 220)
                         .attr("rx", 5)
                         .attr("ry", 5)
                         .attr("width", 200)
                         .attr("height", 80)
                         .style("fill","green");
 
-                    svg1.append("text")
+                    var resumeText = svg1.append("text")
                         .text("Resume")
-                        .attr("font-family","FontAwesome")
+                        //.attr("font-family","FontAwesome")
                         .attr("id","resumeButton")
                         .attr("x",700)
-                        .attr("y",220)
+                        .attr("y",260)
                         .style("font-size","32px")
                         .style("text-anchor", "middle")
                         .style("alignment-baseline","middle")
-                        .style("fill", "white");
+                        .style("cursor","pointer")
+                        .style("fill", "white")
+                        .on("click", function(event) {
+                            drawGlobe(i);
+                            console.log("drawglobe in resume i = ", i);
 
+                            if (spin == false) {
+                                queue()
+                                    .defer(d3.json, "world-110m.json")
+                                    .defer(d3.json, "data.json");
+                                    // .await(ready);
+                                
+                                
+                                spin = true;
 
-                    // Display country name on click
-                    svg1.append("text")
-                        .text(ctyname)
-                        .attr("font-family","FontAwesome")
-                        .attr("id","resumeButton")
-                        .attr("x",700)
-                        .attr("y",80)
-                        .style("font-size","32px")
-                        .style("text-anchor", "middle")
-                        .style("alignment-baseline","middle")
-                        .style("fill", "black");
+                                //remove all elements here, after resume spinning
+                                d3.select("#newsvg").remove();
+                                d3.select("#overlayRect").remove();
+                                d3.select("#resumeButton").remove();
+                                document.getElementById('headerText').style.visibility = "visible";
+                                d3.select("#milkDiv").remove();
+                                d3.select("#methaneDiv").remove();
+
+                                d3.selectAll('.svg-container').remove();
+                                
+                            }
+                        }, false);
+
+                    // // Display country name on click
+                    // svg1.append("text")
+                    //     .text(ctyname)
+                    //     .attr("font-family","FontAwesome")
+                    //     .attr("id","resumeButton")
+                    //     .attr("x",700)
+                    //     .attr("y",50)
+                    //     .style("font-size","32px")
+                    //     .style("text-anchor", "middle")
+                    //     .style("alignment-baseline","middle")
+                    //     .style("fill", "black");
 
 
                     // beginning of radio button
                     var w= 1400;
 		            var h= 125;
-		            // var svg= svg1
-		            //             .append("svg")
-		            //             .attr("width",w)
-		            //             .attr("height",h)
-
-		            //backdrop of color
-		           	// var background= svg.append("rect")
-		            //                     .attr("id","backgroundRect")
-		            //                     .attr("width","100%")
-		            //                     .attr("height","100%")
-		            //                     .attr("x",0)
-		            //                     .attr("y",0)
-		            //                     .attr("fill","#DAC99A")
 
 		            //text that the radio button will toggle
 		            var number= svg1.append("text")
+                                    // .attr("font-family","FontAwesome")
 		                            .attr("id","numberToggle")
-		                            .attr("x",120)
-		                            .attr("y",90)
-		                            .attr("fill","green")
-		                            .attr("font-size",24)
-		                            .text("2011")
+		                            .attr("x",700)
+		                            .attr("y",50)
+		                            .attr("fill","black")
+		                            .attr("font-size",50)
+                                    .style("text-anchor", "middle")
+                                    .style("alignment-baseline","middle")
+		                            .text(ctyname + ' '+ '2011')
+
+                    var description= svg1.append("text")
+                                    // .attr("font-family","FontAwesome")
+                                    .attr("id","numberToggle")
+                                    .attr("x",700)
+                                    .attr("y",90)
+                                    .attr("fill","black")
+                                    .attr("font-size",27)
+                                    .style("text-anchor", "middle")
+                                    .style("alignment-baseline","middle")
+                                    .text(' The relative position of a country with respect to the top 5 countries in milk production and methane emissions' )
 
 		            //container for all buttons
 		            var allButtons= svg1.append("g")
@@ -440,9 +453,10 @@
                                                 var year = buttonNum+2009;
                                                 console.log(this);
 		                                        updateButtonColors(d3.select(this), d3.select(this.parentNode))
-		                                        d3.select("#numberToggle").text(year)
+		                                        d3.select("#numberToggle").text(ctyname + ' '+ year)
                                                 
-                                                 //d3.selectAll('.svg-container').remove();
+                                                d3.select('#milkDiv').remove();
+                                                d3.select('#methaneDiv').remove();
                                                 if(year == 2011){
                                                     draw_graph1(2011,{"CountryName":countries[i].name , "MPro2011": countriesMilkPro2011[i].MPro2011});
                                                     draw_graph2(2011,{"CountryName": countries[i].name,"Me2011": countriesMethane2011[i].Me2011})
@@ -480,7 +494,7 @@
 		            var bHeight= 80; //button height
 		            var bSpace= 30; //space between buttons
 		            var x0= 370; //x offset
-		            var y0= 80; //y offset
+		            var y0= 115; //y offset
 
 		            //adding a rect to each toggle button group
 		            //rx and ry give the rect rounded corner
@@ -518,23 +532,9 @@
 		            }
                     // end of radio button
 
-                    // var para = document.createElement("button");                       // Create a <p> element
-                    // var t = document.createTextNode("This is a paragraph");       // Create a text node
-                    // para.appendChild(t);                                          // Append the text to <p>
-                    // var earth = document.getElementById('earth');
-                    // earth.appendChild(para); 
-                    // var svg2 = svg1.append('svg')
-                    //     .attr("id", "graphSVG")
-                    //     .attr("width", 1400)
-                    //     .attr("height", 500)
-
-
                     d3.select("#canvas").remove();
                     document.getElementById('headerText').style.visibility = "hidden";
 
-                     //Show year Buttons
-                    // document.getElementById('yearButtons').style.visibility = "visible";
-                    /*Calling bar graphs*/
                     draw_graph1(2011,{"CountryName":countries[i].name , "MPro2011": countriesMilkPro2011[i].MPro2011});
                     draw_graph2(2011,{"CountryName": countries[i].name,"Me2011": countriesMethane2011[i].Me2011})
 
@@ -566,14 +566,7 @@
                         document.getElementById('headerText').style.visibility = "visible";
                         d3.select("#milkDiv").remove();
                         d3.select("#methaneDiv").remove();
-                        
-                        //Remove year Buttons
-                        // document.getElementById('yearButtons').style.visibility = "hidden";
 
-                        // for(var i = 0; i < x.length; i++){
-                        //     x[i].remove();
-                        // }
-                            
                         d3.selectAll('.svg-container').remove();
                         
                     }

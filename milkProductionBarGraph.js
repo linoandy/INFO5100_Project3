@@ -102,7 +102,7 @@ console.log(data);
 var xgraph, ygraph;
 var margin = {top: 20, right: 150, bottom: 30, left: 150},
     width = 1400 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    height = 400 - margin.top - margin.bottom ;
 
 var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -153,20 +153,20 @@ var svg = svg1
       .call(xAxis)
       .selectAll('text')
               .style("text-anchor", "end")
-              .style("font-size", "20px")
+              .style("font-size", "30px")
               .attr("transform", "rotate(-35)");;
 
 
   ygraph = svg.append("g");
       ygraph.attr("class", "y axis")
       .call(yAxis)
-      .style("font-size", "20px")
+      .style("font-size", "30px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -75)
+      .attr("y", -120)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .style("font-size", "20px")
+      .style("font-size", "30px")
       .text("Tons");
 
   var state = svg.selectAll(".state")
@@ -193,15 +193,15 @@ var svg = svg1
 
       if(year == 2011){
         console.log('d.value: ', d.value, ' value.MPro2011: ', value.MPro2011);
-        if (d.value == value.MPro2011) return 1; else return 0.5 ; 
+        if (d.value == value.MPro2011) return 1; else return 0.4 ; 
       }
       else if(year == 2010){
         console.log('d.value: ', d.value, ' value.MPro2010: ', value.MPro2010);
-        if (d.value == value.MPro2010) return 1; else return 0.5 ; 
+        if (d.value == value.MPro2010) return 1; else return 0.4 ; 
       }
       else if(year == 2009){
         console.log('d.value: ', d.value, ' value.MPro2009: ', value.MPro2009);
-        if (d.value == value.MPro2009) return 1; else return 0.5 ; 
+        if (d.value == value.MPro2009) return 1; else return 0.4 ; 
       }
 
       // if (d.value == value.MPro2011) return 1; else return 0.5 ; 
@@ -230,16 +230,17 @@ var svg = svg1
 
   legend.append("rect")
       .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
+      .attr("width", 30)
+      .attr("height", 30)
       .style("fill", color);
 
   legend.append("text")
       .attr("x", width - 24)
-      .attr("y", 9)
+      .attr("y", 15)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d; });
+      .attr("font-size", 25)
+      .text( 'Milk Production');
     
 }
 //draw_graph1({"CountryName": "Poland", "MPro2011": 12434067});
