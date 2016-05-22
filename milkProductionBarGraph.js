@@ -100,9 +100,9 @@ data.sort(function(obj1, obj2) {
 }) ;
 console.log(data);
 var xgraph, ygraph;
-var margin = {top: 20, right: 20, bottom: 30, left: 200},
-    width = 600 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+var margin = {top: 20, right: 100, bottom: 30, left: 100},
+    width = 1400 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
 var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -129,9 +129,9 @@ var svg = svg1
    .classed("svg-container", true).append("svg")
    .attr('id', 'milkDiv')
   .attr("preserveAspectRatio", "xMinYMin meet")
-   .attr("viewBox", "0 0 800 800")
+   .attr("viewBox", "0 0 1400 1600")
    .attr("x", 0)
-   .attr("y",200)
+   .attr("y",340)
    //class to make it responsive
    .classed("svg-content-responsive", true) 
   .append("g")
@@ -211,7 +211,7 @@ var svg = svg1
   .attr("class", "bartext")
   .attr("text-anchor", "middle")
   .attr("fill", "black")
-  .attr("font-size","10px")
+  .attr("font-size","30px")
   .attr("x", function(d) { return x1.rangeBand()/2; })
   .attr("y", function(d) { return y(d.value); })
   //.attr("transform", "rotate(-10)")

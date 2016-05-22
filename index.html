@@ -18,7 +18,7 @@
     <!-- Custom CSS -->
     <style>
     body {
-        padding-top: 70px;
+        padding-top: 0px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
 
@@ -46,7 +46,7 @@
         font-size: 1.5vw;
         position:absolute;
         right:0;
-        top:75%;
+        top:65%;
         bottom: 25%;
         width:100%;
 /*        height:60%;*/
@@ -119,37 +119,7 @@
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+
 
 
     <!-- Page Content -->
@@ -221,8 +191,8 @@
 
            
             var projection = d3.geo.orthographic()
-                .translate([width / 2, height / 2])
-                .scale(width / 2 - 20)
+                .translate([width / 2, height / 2.5])
+                .scale(width / 2 - 100)
                 .clipAngle(90)
                 .precision(0.6);
 
@@ -358,11 +328,19 @@
 
                     console.log(earthDivWidth);
                     console.log(earthDivHeight);
-                    svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg").attr("preserveAspectRatio", "xMinYMin meet").attr("viewBox", "0 0 800 800")
+                    svg1 = d3.select("#earth").append("svg").attr("width", 1400).attr("height", 1600).attr("id", "newsvg").attr("preserveAspectRatio", "xMinYMin meet").attr("viewBox", "0 0 1400 1600")
 					   //class to make it responsive
 					   .classed("svg-content-responsive", true) ;
 
                     // draw a rectangle on svg to cover the background globe
+                    svg1.append("svg:image")
+                        .attr("xlink:href", "globe3.png")
+                        .attr("x", 0)
+                        .attr("y", -500)
+                        .attr("width", 1400)
+                        .attr("height", 2800)
+                        .style("opacity", "0.5")
+
                     svg1.append("rect")
                         .attr("id", "overlayRect")
                         .attr("x", 0)
@@ -375,24 +353,27 @@
                     svg1.append("rect")
                         .attr("id", "resumeButton")
                         .style("cursor","pointer")
-                        .attr("x", 340)
-                        .attr("y", 130)
+                        .attr("x", 600)
+                        .attr("y", 180)
                         .attr("rx", 5)
                         .attr("ry", 5)
-                        .attr("width", 80)
-                        .attr("height", 40)
+                        .attr("width", 200)
+                        .attr("height", 80)
                         .style("fill","green");
 
                     svg1.append("text")
                         .text("Resume")
                         .attr("font-family","FontAwesome")
                         .attr("id","resumeButton")
-                        .attr("x",380)
-                        .attr("y",150)
-                        .style("font-size","15px")
+                        .attr("x",700)
+                        .attr("y",220)
+                        .style("font-size","32px")
                         .style("text-anchor", "middle")
                         .style("alignment-baseline","middle")
                         .style("fill", "white");
+
+
+
 
                     // beginning of radio button
                     var w= 1400;
@@ -481,10 +462,10 @@
 		                                        }
 		                                    })
 
-		            var bWidth= 80; //button width
-		            var bHeight= 40; //button height
-		            var bSpace= 10; //space between buttons
-		            var x0= 250; //x offset
+		            var bWidth= 200; //button width
+		            var bHeight= 80; //button height
+		            var bSpace= 30; //space between buttons
+		            var x0= 370; //x offset
 		            var y0= 80; //y offset
 
 		            //adding a rect to each toggle button group
@@ -511,6 +492,7 @@
 		                        .attr("text-anchor","middle")
 		                        .attr("dominant-baseline","central")
 		                        .attr("fill","white")
+                                .attr("font-size", 32)
 		                        .text(function(d) {return d;})
 
 		            function updateButtonColors(button, parent) {
