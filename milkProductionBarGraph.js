@@ -1,7 +1,9 @@
-
-function draw_graph1( value){
+function draw_graph1(year,value){
+  var data;
+  console.log('year',year);
+  console.log('valeu: ', value);
 var cname = value.CountryName; 
-var data1 = [
+var data2011 = [
   {
     "CountryName": "India",
     "MPro2011": 123400000,
@@ -23,11 +25,78 @@ var data1 = [
     "MPro2011": 36656000,
   }
  ];
-var data = data1;
+
+/*Remaining hardcoded data files*/
+var data2010 = [
+  {
+    "CountryName": "India",
+    "MPro2010": 121847000,
+  },
+  {
+    "CountryName": "China",
+    "MPro2010": 40746820,
+  },
+  {
+    "CountryName": "Brazil",
+     "MPro2010": 30863609,
+  },
+  {
+    "CountryName": "United States",
+    "MPro2010": 87474381,
+  },
+  {
+    "CountryName": "Pakistan",
+    "MPro2010": 35491000,
+  }
+ ];
+
+ var data2009 = [
+  {
+    "CountryName": "India",
+    "MPro2009": 115868000,
+  },
+  {
+    "CountryName": "China",
+    "MPro2009": 40046136,
+  },
+  {
+    "CountryName": "Brazil",
+     "MPro2009": 29229263,
+  },
+  {
+    "CountryName": "United States",
+    "MPro2009": 85880482,
+  },
+  {
+    "CountryName": "Pakistan",
+    "MPro2009": 34362000,
+  }
+ ];
+
+
+if(year == 2011){
+  data = data2011;
+}
+else if(year == 2010){
+  data = data2010;
+}
+else if(year == 2009){
+  data = data2009;
+}
+
 data.push(value);
 data.sort(function(obj1, obj2) {
   // Descending: first age less than the previous
-  return obj2.MPro2011 - obj1.MPro2011;
+  if(year == 2011){
+      return obj2.MPro2011 - obj1.MPro2011;
+    }
+    else if(year == 2010){
+      return obj2.MPro2010 - obj1.MPro2010;
+    }
+    else if(year == 2009){
+      return obj2.MPro2009 - obj1.MPro2009;
+  }
+  //return obj2.MPro2011 - obj1.MPro2011;
 }) ;
 console.log(data);
 var xgraph, ygraph;
@@ -117,7 +186,23 @@ var svg = svg1
       .attr("y", function(d) { return y(d.value); })
     .style("fill", function(d) { return color(d.name) ; })
     //.style("opacity", function(d) { if (data.CountryName == value.CountryName) return 1; else return 0.5 ; });
-    .style("opacity", function(d) { if (d.value == value.MPro2011) return 1; else return 0.5 ; });
+    .style("opacity", function(d) { 
+
+      if(year == 2011){
+        console.log('d.value: ', d.value, ' value.MPro2011: ', value.MPro2011);
+        if (d.value == value.MPro2011) return 1; else return 0.5 ; 
+      }
+      else if(year == 2010){
+        console.log('d.value: ', d.value, ' value.MPro2010: ', value.MPro2010);
+        if (d.value == value.MPro2010) return 1; else return 0.5 ; 
+      }
+      else if(year == 2009){
+        console.log('d.value: ', d.value, ' value.MPro2009: ', value.MPro2009);
+        if (d.value == value.MPro2009) return 1; else return 0.5 ; 
+      }
+
+      // if (d.value == value.MPro2011) return 1; else return 0.5 ; 
+    });
 
   state.selectAll(".bartext")
   .data(function(d) { return d.ages; })

@@ -1,34 +1,101 @@
+function draw_graph2(year, value){
+  var data;
+  var data2011_methane = [
+    {
+      "CountryName": "India",
+      "Me2011": 430474.7828
+    },
+    {
+      "CountryName": "China",
+      "Me2011": 340141.2574
+    },
+    {
+      "CountryName": "Brazil",
+      "Me2011": 279066.0728
+    },
+    {
+      "CountryName": "United States",
+      "Me2011": 172647.1441
+    },
+    {
+      "CountryName": "Australia",
+      "Me2011": 94049.5226
+    }
+   ];
 
-function draw_graph2(value){
-var data2 = [
-  {
-    "CountryName": "India",
-    "Me2011": 430474.7828
-  },
-  {
-    "CountryName": "China",
-    "Me2011": 340141.2574
-  },
-  {
-    "CountryName": "Brazil",
-    "Me2011": 279066.0728
-  },
-  {
-    "CountryName": "United States",
-    "Me2011": 172647.1441
-  },
-  {
-    "CountryName": "Australia",
-    "Me2011": 94049.5226
+   /*Remaining hardcoded data files*/
+  var data2010_methane = [
+    {
+      "CountryName": "India",
+     "Me2010": 424460.966,
+    },
+    {
+      "CountryName": "China",
+      "Me2010": 347036.5617,
+    },
+    {
+      "CountryName": "Brazil",
+      "Me2010": 279416.2196,
+    },
+    {
+      "CountryName": "United States",
+      "Me2010": 175451.6417,
+    },
+    {
+      "CountryName": "Australia",
+      "Me2010": 56702.9041,
+    }
+   ];
+
+   var data2009_methane = [
+    {
+      "CountryName": "India",
+      "Me2009": 415092.7721
+    },
+    {
+      "CountryName": "China",
+       "Me2009": 341765.9137
+    },
+    {
+      "CountryName": "Brazil",
+      "Me2009": 268305.9411
+    },
+    {
+      "CountryName": "United States",
+      "Me2009": 175026.1582
+    },
+    {
+      "CountryName": "Australia",
+      "Me2009": 66620.578
+    }
+   ];
+    
+  if(year == 2011){
+    data = data2011_methane;
   }
- ];  
-var data = data2;
-data.push(value);
-data.sort(function(obj1, obj2) {
-	// Ascending: first age less than the previous
-	return obj2.Me2011 - obj1.Me2011;
-}) ;
-console.log(data);
+  else if(year == 2010){
+    data = data2010_methane;
+  }
+  else if(year == 2009){
+    data = data2009_methane;
+  }
+
+  data.push(value);
+  data.sort(function(obj1, obj2) {
+    // Ascending: first age less than the previous
+    if(year == 2011){
+      return obj2.Me2011 - obj1.Me2011;
+    }
+    else if(year == 2010){
+      return obj2.Me2010 - obj1.Me2010;
+    }
+    else if(year == 2009){
+      return obj2.Me2009 - obj1.Me2009;
+    }
+    //return obj2.Me2011 - obj1.Me2011;
+  }) ;
+  console.log(data);
+
 var xgraph, ygraph;
 var margin = {top: 20, right: 20, bottom: 30, left: 200},
     width = 600 - margin.left - margin.right,
@@ -120,7 +187,24 @@ var svg = svg1
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) { return y(d.value); })
       .style("fill", function(d) { return color(d.name) ; })
-	  .style("opacity", function(d) { if (d.value == value.Me2011) return 1; else return 0.5 ; });
+	  .style("opacity", function(d) { 
+
+      if(year == 2011){
+        console.log('d.value: ', d.value, ' value.Me2011: ', value.Me2011);
+        if (d.value == value.Me2011) return 1; else return 0.5 ; 
+        }
+        else if(year == 2010){
+          console.log('d.value: ', d.value, ' value.Me2010: ', value.Me2010);
+          if (d.value == value.Me2010) return 1; else return 0.5 ; 
+        }
+        else if(year == 2009){
+          console.log('d.value: ', d.value, ' value.Me2009: ', value.Me2009);
+          if (d.value == value.Me2009) return 1; else return 0.5 ; 
+        }
+
+        //if (d.value == value.Me2011) return 1; else return 0.5 ; 
+
+      });
 
   state.selectAll(".bartext")
   .data(function(d) { return d.ages; })

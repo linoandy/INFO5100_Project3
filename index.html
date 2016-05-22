@@ -264,9 +264,21 @@
                 });
               });
               
-               countriesMilkPro = countriesMilkPro.filter(function(d) {
+               countriesMilkPro2011 = countriesMilkPro.filter(function(d) {
                 return names.some(function(n) {
                   if (d.id == n.CountryID) return d.MPro2011 = n.MPro2011;
+                });
+              });
+
+                 countriesMilkPro2010 = countriesMilkPro.filter(function(d) {
+                return names.some(function(n) {
+                  if (d.id == n.CountryID) return d.MPro2010 = n.MPro2010;
+                });
+              });
+
+                 countriesMilkPro2009 = countriesMilkPro.filter(function(d) {
+                return names.some(function(n) {
+                  if (d.id == n.CountryID) return d.MPro2009 = n.MPro2009;
                 });
               });
               
@@ -276,9 +288,21 @@
                 });
               });
               
-                 countriesMethane = countriesMethane.filter(function(d) {
+                 countriesMethane2011 = countriesMethane.filter(function(d) {
                 return names.some(function(n) {
                   if (d.id == n.CountryID) return d.Me2011 = n.Me2011;
+                });
+              });
+
+                 countriesMethane2010 = countriesMethane.filter(function(d) {
+                return names.some(function(n) {
+                  if (d.id == n.CountryID) return d.Me2010 = n.Me2010;
+                });
+              });
+
+                 countriesMethane2009 = countriesMethane.filter(function(d) {
+                return names.some(function(n) {
+                  if (d.id == n.CountryID) return d.Me2009 = n.Me2009;
                 });
               });
 
@@ -286,7 +310,7 @@
                 d3.transition()
                     .duration(1250)
                     .each("start", function() {
-                        title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro[i].MPro2011 + "<br/>" + "Milk consumption: "+countriesMilkCon[i].MCon + "<br/>" + "Methane production: "+countriesMethane[i].Me2011);
+                        title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro2011[i].MPro2011 + "<br/>" + "Milk consumption: "+countriesMilkCon[i].MCon + "<br/>" + "Methane production: "+countriesMethane2011[i].Me2011);
                         //document.getElementById('graph').innerHTML = "this is a graph !!! " + i; // we can use this to plot graphs
                         console.log("i = ", i);
                     })
@@ -408,6 +432,7 @@
 		            var hoverColor= "#0000ff"
 		            var pressedColor= "#000077"
 
+                    updateButtonColors(d3.select(this), d3.select(this.parentNode))
 		            //groups for each button (which will hold a rect and text)
 		            var buttonGroups= allButtons.selectAll("g.button")
 		                                    .data(labels)
@@ -415,10 +440,31 @@
 		                                    .append("g")
 		                                    .attr("class","button")
 		                                    .style("cursor","pointer")
-		                                    .on("click",function(d,i) {
+		                                    .on("click",function(d,buttonNum) {
 		                                    	// call drawgraph1 and drawgraph2 should go inside here
+                                                var year = buttonNum+2009;
+                                                console.log(this);
 		                                        updateButtonColors(d3.select(this), d3.select(this.parentNode))
-		                                        d3.select("#numberToggle").text(i+2009)
+		                                        d3.select("#numberToggle").text(year)
+                                                
+                                                 //d3.selectAll('.svg-container').remove();
+                                                if(year == 2011){
+                                                    draw_graph1(2011,{"CountryName":countries[i].name , "MPro2011": countriesMilkPro2011[i].MPro2011});
+                                                    draw_graph2(2011,{"CountryName": countries[i].name,"Me2011": countriesMethane2011[i].Me2011})
+
+                                                }
+                                                else if(year == 2010){
+                                                    console.log('countriesMilkPro2010', countriesMilkPro2010);
+                                                    draw_graph1(2010,{"CountryName":countries[i].name , "MPro2010": countriesMilkPro2010[i].MPro2010});
+                                                    draw_graph2(2010,{"CountryName": countries[i].name,"Me2010": countriesMethane2010[i].Me2010})
+                                                }
+                                                else if(year == 2009){
+                                                     console.log('countriesMilkPro2009', countriesMilkPro2009);
+                                                     draw_graph1(2009,{"CountryName":countries[i].name , "MPro2009": countriesMilkPro2009[i].MPro2009});
+                                                    draw_graph2(2009,{"CountryName": countries[i].name,"Me2009": countriesMethane2009[i].Me2009})
+                                                }
+
+                                                
 		                                    })
 		                                    .on("mouseover", function() {
 		                                        if (d3.select(this).select("rect").attr("fill") != pressedColor) {
@@ -493,8 +539,8 @@
                      //Show year Buttons
                     // document.getElementById('yearButtons').style.visibility = "visible";
                     /*Calling bar graphs*/
-                    draw_graph1({"CountryName":countries[i].name , "MPro2011": countriesMilkPro[i].MPro2011});
-                    draw_graph2({"CountryName": countries[i].name,"Me2011": countriesMethane[i].Me2011})
+                    draw_graph1(2011,{"CountryName":countries[i].name , "MPro2011": countriesMilkPro2011[i].MPro2011});
+                    draw_graph2(2011,{"CountryName": countries[i].name,"Me2011": countriesMethane2011[i].Me2011})
 
                     // draw_graph1({"CountryName":'China' , "MPro2011": 41434820});
                     // draw_graph2({"CountryName": 'China' ,"Me2011": 340141.2574})
