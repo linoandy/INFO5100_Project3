@@ -129,7 +129,7 @@ var svg = svg1
    .classed("svg-container", true).append("svg")
    .attr('id', 'milkDiv')
   .attr("preserveAspectRatio", "xMinYMin meet")
-   .attr("viewBox", "0 0 1400 1600")
+   .attr("viewBox", "0 0 1400 1050")
    .attr("x", 0)
    .attr("y",340)
    //class to make it responsive
