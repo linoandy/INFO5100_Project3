@@ -96,7 +96,6 @@ function draw_graph2(year, value){
       return obj2.Me2009 - obj1.Me2009;
     }
   }) ;
-  console.log(data);
 
 var xgraph, ygraph;
 var margin = {top: 20, right: 150, bottom: 30, left: 150},
@@ -191,15 +190,13 @@ var svg = svg1
 
       //handle highlightes for each year's data
       if(year == 2011){
-        console.log('d.value: ', d.value, ' value.Me2011: ', value.Me2011);
+        
         if (d.value == value.Me2011) return 1; else return 0.4 ; 
         }
         else if(year == 2010){
-          console.log('d.value: ', d.value, ' value.Me2010: ', value.Me2010);
           if (d.value == value.Me2010) return 1; else return 0.4 ; 
         }
         else if(year == 2009){
-          console.log('d.value: ', d.value, ' value.Me2009: ', value.Me2009);
           if (d.value == value.Me2009) return 1; else return 0.4 ; 
         }
       });

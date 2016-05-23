@@ -273,7 +273,6 @@
                     .each("start", function() {
                         title.html("Country name: "+countries[i = (i + 1) % n].name + "<br/>" + "Milk production: "+countriesMilkPro2011[i].MPro2011 + " Tons <br/>" + "Methane production: "+countriesMethane2011[i].Me2011+ " Gigagrams");
                         ctyname = countries[i].name
-                        console.log("i = ", i, ctyname);
                     })
                     
                     .tween("rotate", function() {
@@ -363,7 +362,6 @@
                         .style("fill", "white")
                         .on("click", function(event) {
                             drawGlobe(i);
-                            console.log("drawglobe in resume i = ", i);
 
                             if (spin == false) {
                                 queue()
@@ -435,7 +433,6 @@
 		                                    .on("click",function(d,buttonNum) {
 		                                    	// call drawgraph1 and drawgraph2 should go inside here
                                                 var year = buttonNum+2009;
-                                                console.log(this);
 		                                        updateButtonColors(d3.select(this), d3.select(this.parentNode))
 		                                        d3.select("#numberToggle").text(ctyname + ' '+ year)
                                                 
@@ -448,12 +445,10 @@
 
                                                 }
                                                 else if(year == 2010){
-                                                    console.log('countriesMilkPro2010', countriesMilkPro2010);
                                                     draw_graph1(2010,{"CountryName":countries[i].name , "MPro2010": countriesMilkPro2010[i].MPro2010});
                                                     draw_graph2(2010,{"CountryName": countries[i].name,"Me2010": countriesMethane2010[i].Me2010})
                                                 }
                                                 else if(year == 2009){
-                                                     console.log('countriesMilkPro2009', countriesMilkPro2009);
                                                      draw_graph1(2009,{"CountryName":countries[i].name , "MPro2009": countriesMilkPro2009[i].MPro2009});
                                                     draw_graph2(2009,{"CountryName": countries[i].name,"Me2009": countriesMethane2009[i].Me2009})
                                                 }
@@ -529,7 +524,6 @@
                 var resume = document.getElementById('resumeButton');
                 resume.addEventListener('click', function(event) {
                     drawGlobe(i);
-                    console.log("drawglobe in resume i = ", i);
 
                     if (spin == false) {
                         queue()

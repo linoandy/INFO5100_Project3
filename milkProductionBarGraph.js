@@ -189,15 +189,12 @@ function draw_graph1(year,value){
 
         //handle highlightes for each year's data
         if(year == 2011){
-          console.log('d.value: ', d.value, ' value.MPro2011: ', value.MPro2011);
           if (d.value == value.MPro2011) return 1; else return 0.4 ; 
         }
         else if(year == 2010){
-          console.log('d.value: ', d.value, ' value.MPro2010: ', value.MPro2010);
           if (d.value == value.MPro2010) return 1; else return 0.4 ; 
         }
         else if(year == 2009){
-          console.log('d.value: ', d.value, ' value.MPro2009: ', value.MPro2009);
           if (d.value == value.MPro2009) return 1; else return 0.4 ; 
         }
       });
